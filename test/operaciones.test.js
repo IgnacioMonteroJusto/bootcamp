@@ -45,9 +45,15 @@ describe("Operaciones", () => {
         it("test suma result neg", () => {
             //console.log(a, b);
             let res = op.suma(a, -b);
-
-            assert.equal(res, a + (-b));//comprueba dos valores introducidos
-            //assert();//comprueba que el valor no sea distinto de nll
+            assert.equal(res, a + (-b));
+            
+        });
+        
+        it("Test suma neg numbers", () => {
+            //console.log(a, b);
+            let res = op.suma(-a, -b);
+            assert.equal(res, (-a) + (-b));
+            
         });
     });
         
@@ -55,9 +61,8 @@ describe("Operaciones", () => {
         it("test resta", () => {
             //console.log(a, b);
             let res = op.resta(a, b);
-
-            assert.equal(res, a - b);//comprueba dos valores introducidos
-            //assert();//comprueba que el valor no sea distinto de nll
+            assert.equal(res, a - b);
+            
         });
     });
     
@@ -104,6 +109,50 @@ describe("Operaciones", () => {
 
         });
         
+    });
+    
+    describe("Square op:", () => {
+       it("Cero square", () =>{
+           try{
+               a = 0;
+               op.square(a);
+               assert.ok(false);
+           }catch(e){
+               assert.ok(true);
+           }
+       });
+       
+       it("Square correct", () =>{
+           try{
+               let res = op.square(a);
+               assert.equal(res, Math.sqrt(a));
+           }catch(e){
+               assert.ok(true);
+           }
+       });
+       
+    });
+    
+    describe("Expo op:", () => {
+        it("Exponential", () =>{
+           let iter = getIntRandom(1, 20);
+           a = getIntRandom(1, 20);
+           b = getIntRandom(2, 10);
+           let res = op.expo(a,b);
+           assert.equal(res, Math.pow(a,b));
+        });
+       
+        it("Negative Exponential", () =>{
+            try{
+                let iter = getIntRandom(1, 20);
+                a = getIntRandom(1, 20);
+                b = getIntRandom(2, 10);
+                let res = op.expo(a,-b);
+                assert.ok(false);
+           }catch(e){
+                assert.ok(true);
+           }
+       });
     });
     
 });
