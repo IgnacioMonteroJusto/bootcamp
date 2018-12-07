@@ -106,6 +106,7 @@ describe("Operaciones", () => {
                 op.div(a, 0);
                 assert.ok(false);
             }catch(e){
+                console.log(e.message);
                 assert.ok(true);
             }
 
@@ -116,6 +117,7 @@ describe("Operaciones", () => {
                 op.div(b, a);
                 assert.ok(false);
             }catch(e){
+                console.log(e.message);
                 assert.ok(true);
             }
 
@@ -128,6 +130,7 @@ describe("Operaciones", () => {
                 let res = op.div_rest(a, b);
                 assert.equal(res, a % b);
             }catch(e){
+                console.log(e.message);
                 assert.ok(true);
             }
 
@@ -138,6 +141,7 @@ describe("Operaciones", () => {
                 op.div_rest(0, b);
                 assert.ok(false);
             }catch(e){
+                console.log(e.message);
                 assert.ok(true);
             }
 
@@ -152,6 +156,7 @@ describe("Operaciones", () => {
                op.square(a);
                assert.ok(false);
            }catch(e){
+               console.log(e.message);
                assert.ok(true);
            }
        });
@@ -161,6 +166,7 @@ describe("Operaciones", () => {
                let res = op.square(a);
                assert.equal(res, Math.sqrt(a));
            }catch(e){
+               console.log(e.message);
                assert.ok(true);
            }
        });
@@ -194,6 +200,7 @@ describe("Operaciones", () => {
                 let res = op.expo(a,-b);
                 assert.ok(false);
            }catch(e){
+                console.log(e.message);
                 assert.ok(true);
            }
        });
@@ -205,9 +212,10 @@ describe("Operaciones", () => {
                 b = getIntRandom(1, 10);
                 let res = op.expo(-a, b);
                 assert.ok(false);
-           }catch(e){
+            }catch(e){
+                console.log(e.message);
                 assert.ok(true);
-           }
+            }
        });
     });
     
