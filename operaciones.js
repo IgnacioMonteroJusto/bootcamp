@@ -7,6 +7,9 @@ const resta = (a, b) =>{
 };
 
 const multi = (a, b) =>{
+    if(a == 0 || b == 0){
+        return 0;
+    }
     return a * b;
 };
 
@@ -46,6 +49,9 @@ const expo = (a, b) => {
 const square = (a) => {
     if(a == 0){
         throw new Error("No square root for 0");
+    }
+    if(a < 0){
+        throw new Error("No square root for negative numbers");
     }
     return Math.sqrt(a);
 };

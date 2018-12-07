@@ -28,8 +28,8 @@ describe("Operaciones", () => {
     
     afterEach(() => {
         //console.log("aftereach");
-        a = 0;
-        b = 0;
+        a = getIntRandom(0, 1000);
+        b = getIntRandom(1000, 2000);
     });
     
     describe("Suma op:", () => {
@@ -64,11 +64,36 @@ describe("Operaciones", () => {
             assert.equal(res, a - b);
             
         });
+        
+        it("Test resta second neg", () => {
+            //console.log(a, b);
+            let res = op.resta(a, -b);
+            assert.equal(res, a - (-b));
+            
+        });
+        
+        it("Test resta both neg", () => {
+            //console.log(a, b);
+            let res = op.resta(-a, -b);
+            assert.equal(res, (-a) - (-b));
+            
+        });
     });
     
     describe("Multi op:", () => {
-        it("test resta", () => {
-            
+        it("Test multi", () => {
+            let res = op.multi(a, b);
+            assert.equal(res, a * b);
+        });
+        
+        it("Test multi by first param 0", () => {
+            a = 0;
+            let res = op.multi(a, b);
+            assert.equal(res, a * b);
+        });
+        
+        it("Test multi by second param 0", () => {
+            b = 0;
             let res = op.multi(a, b);
             assert.equal(res, a * b);
         });
@@ -79,7 +104,16 @@ describe("Operaciones", () => {
         it("test div 0", () => {
             try{
                 op.div(a, 0);
+                assert.ok(false);
+            }catch(e){
+                assert.ok(true);
+            }
 
+        });
+        
+        it("test div ", () => {
+            try{
+                op.div(b, a);
                 assert.ok(false);
             }catch(e){
                 assert.ok(true);
@@ -88,11 +122,11 @@ describe("Operaciones", () => {
         });
     });
     
-    describe("Mod op:", () => {
+    describe("Div_rest op:", () => {
         it("Div resto", () => {
             try{
-                op.div_rest(a, b);
-                assert.ok(false);
+                let res = op.div_rest(a, b);
+                assert.equal(res, a % b);
             }catch(e){
                 assert.ok(true);
             }
@@ -131,6 +165,16 @@ describe("Operaciones", () => {
            }
        });
        
+       it("Square neagitve number", () =>{
+           try{
+               op.square(-a);
+               assert.ok(false);
+           }catch(e){
+               console.log(e.message);
+               assert.ok(true);
+           }
+       });
+       
     });
     
     describe("Expo op:", () => {
@@ -148,6 +192,18 @@ describe("Operaciones", () => {
                 a = getIntRandom(1, 20);
                 b = getIntRandom(2, 10);
                 let res = op.expo(a,-b);
+                assert.ok(false);
+           }catch(e){
+                assert.ok(true);
+           }
+       });
+       
+       it("Exponential neg number", () =>{
+            try{
+                a = getIntRandom(1, 20);
+                a = -a;
+                b = getIntRandom(1, 10);
+                let res = op.expo(-a, b);
                 assert.ok(false);
            }catch(e){
                 assert.ok(true);
