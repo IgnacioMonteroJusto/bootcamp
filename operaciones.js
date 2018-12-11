@@ -33,7 +33,7 @@ const div_rest = (a, b) =>{
     return a % b;
 };
 
-const mcm = (a, b, type_return) => {
+const mcm_mcd = (a, b, type_return) => {
     
     if(a == 0 || b == 0){
         throw new Error("Cannot take minimun common of zero.")
@@ -148,7 +148,6 @@ const square = (num) => {
 
 const logarithm_10 = (number) => {
     
-    console.log("number = ",number);
     const base = 10;
     const max_decimals = 3;
     
@@ -162,49 +161,40 @@ const logarithm_10 = (number) => {
         throw new Error("No logarithm for zero.");
     }
     
+    //factorizamos el numero
     do{
         aux = aux / base;
-        console.log("aux = ",aux);
         times++;
     }while(aux > base);
     
     result = times;
     times = 0;
-    //parte decimal. Limitado a dos
-    
+    //parte decimal. Limitado a tres
+    if(aux % base === 0){
+        return result;
+    }
     do{
         //sacaremos 3 decimales
-        console.log("Mantisa = ", aux);
-        aux = Math.pow(base, aux);
-        console.log("Mantisa pow = ", aux);
-        
+        aux = Math.pow(base, aux);        
         do{        
-            console.log("aux decimal ",aux);
             aux = aux / base;
             times_dec++;
 
         }while(aux > base);
         aux_decimal += times_dec;
-        console.log("aux decimal fuera = ",aux_decimal);
-
         times++;
         
     }while(times < max_decimals);
     
     result = result +"."+ aux_decimal;
     console.log(`log 10 ${number} = `, result);
+    
     return result;
 };
-
-function getMantisa(number, base){
-    
-    
-}
 
 
 /*
  * Params:
- * base: number to get the expo
  * expo: exponential number
  */
 const expo_e = (expo) => {
@@ -236,7 +226,7 @@ module.exports = {
     multi,
     div,
     div_rest,
-    mcm,
+    mcm_mcd,
     prime,
     co_prime,
     square,
