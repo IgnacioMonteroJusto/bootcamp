@@ -106,7 +106,7 @@ describe("Operaciones", () => {
                 op.div(a, 0);
                 assert.ok(false);
             }catch(e){
-                console.log(e.message);
+                //console.log(e.message);
                 assert.ok(true);
             }
 
@@ -117,7 +117,7 @@ describe("Operaciones", () => {
                 op.div(b, a);
                 assert.ok(false);
             }catch(e){
-                console.log(e.message);
+                //console.log(e.message);
                 assert.ok(true);
             }
 
@@ -130,7 +130,7 @@ describe("Operaciones", () => {
                 let res = op.div_rest(a, b);
                 assert.equal(res, a % b);
             }catch(e){
-                console.log(e.message);
+                //console.log(e.message);
                 assert.ok(true);
             }
 
@@ -141,12 +141,75 @@ describe("Operaciones", () => {
                 op.div_rest(0, b);
                 assert.ok(false);
             }catch(e){
-                console.log(e.message);
+                //console.log(e.message);
                 assert.ok(true);
             }
 
         });
         
+    });
+    
+    describe("MCM:", () => {
+        it("Minimo comun", () => {
+            try{
+                a = 1500;
+                b = 176;
+                let mcm = op.mcm(a, b,'mcm');
+                let mcd = op.mcm(a, b,'mcd');
+                assert.equal(mcm, (a * b)/ mcd);
+            }catch(e){
+                assert.ok(true);
+            }
+        });
+        
+        it("Minimo comun con 0", () => {
+            try{
+                a = 0;
+                b = 0;
+                op.mcm(a, b,'mcm');
+                assert.ok(false);
+            }catch(e){
+                assert.ok(true);
+            }
+        });
+    });
+    
+    describe("MCD:", () => {
+        it("Maximo comun divisor", () => {
+            a = 1500;
+            b = 176;
+            let res = op.mcm(a, b, 'mcd');
+            let mcm = op.mcm(a, b, 'mcm');
+            assert.equal(res, (a * b)/ mcm);
+            
+        });
+    });
+    
+    describe("Primos:", () => {
+        it("Numero primo", () => {
+            a = getIntRandom(0, 1000);
+            let res = op.prime(a);
+            if(res){
+                assert.equal(res, true);
+            }else{
+                assert.equal(res, false);
+            }
+            
+        });
+    });
+    
+    describe("Co-Primos:", () => {
+        it("Numeros coprimos", () => {
+            a = getIntRandom(0, 1000);
+            b = getIntRandom(0, 1000);
+            let res = op.co_prime(a, b);
+            if(res){
+                assert.equal(res, true);
+            }else{
+                assert.equal(res, false);
+            }
+            
+        });
     });
     
     describe("Square op:", () => {
@@ -156,7 +219,7 @@ describe("Operaciones", () => {
                op.square(a);
                assert.ok(false);
            }catch(e){
-               console.log(e.message);
+               //console.log(e.message);
                assert.ok(true);
            }
        });
@@ -166,57 +229,57 @@ describe("Operaciones", () => {
                let res = op.square(a);
                assert.equal(res, Math.sqrt(a));
            }catch(e){
-               console.log(e.message);
+               //console.log(e.message);
                assert.ok(true);
            }
        });
        
-       it("Square neagitve number", () =>{
+       it("Square negative number", () =>{
            try{
                op.square(-a);
                assert.ok(false);
            }catch(e){
-               console.log(e.message);
+               //console.log(e.message);
                assert.ok(true);
            }
        });
        
     });
     
-    describe("Expo op:", () => {
+    describe("Expo E:", () => {
         it("Exponential", () =>{
-           let iter = getIntRandom(1, 20);
-           a = getIntRandom(1, 20);
-           b = getIntRandom(2, 10);
-           let res = op.expo(a,b);
-           assert.equal(res, Math.pow(a,b));
-        });
-       
-        it("Negative Exponential", () =>{
-            try{
-                let iter = getIntRandom(1, 20);
-                a = getIntRandom(1, 20);
-                b = getIntRandom(2, 10);
-                let res = op.expo(a,-b);
-                assert.ok(false);
-           }catch(e){
-                console.log(e.message);
+            a = getIntRandom(2, 10);
+            const e = 2.718281828459045;
+            let res = op.expo_e(a);
+            
+            if(e - res < 0.02){
                 assert.ok(true);
-           }
-       });
-       
-       it("Exponential neg number", () =>{
-            try{
-                a = getIntRandom(1, 20);
-                a = -a;
-                b = getIntRandom(1, 10);
-                let res = op.expo(-a, b);
+            }else{
                 assert.ok(false);
-            }catch(e){
-                console.log(e.message);
-                assert.ok(true);
             }
-       });
+            
+        });
+              
+    });
+    
+    describe("Logarithm 10:", () => {
+        it("Test Logarithm", () =>{
+            a = getIntRandom(1, 2000);
+            let res = op.logarithm_10(a);
+            assert.equal(res, Math.log10(a).toFixed(3));
+            
+        });
+              
+    });
+    
+    describe("Number Round:", () => {
+        it("Round by n decimal", () => {
+            a = 1500.123456789;
+            b = getFloatRandom(0.000000001, 99.999999999);
+            let num_dec = getIntRandom(1, 6);
+            let res = op.number_round(a, num_dec);            
+            assert.equal(res, a.toFixed(num_dec));
+        });
     });
     
 });
@@ -229,4 +292,8 @@ after(() => {
 
 function getIntRandom(min, max) {
     return Math.floor(Math.random()* (max - min + 1)) + min;
+}
+
+function getFloatRandom(min, max) {
+    return (Math.random()* (max - min));
 }

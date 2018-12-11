@@ -33,30 +33,202 @@ const div_rest = (a, b) =>{
     return a % b;
 };
 
-const expo = (a, b) => {
+const mcm = (a, b, type_return) => {
     
-    if(a == 0){
-        throw new Error("No exponential for 0");
-    }
-    
-    if(b < 0){
-        throw new Error("No negative exponential");
+    if(a == 0 || b == 0){
+        throw new Error("Cannot take minimun common of zero.")
     }
     
-    return Math.pow(a, b);
-}
-
-const square = (a) => {
-    if(a == 0){
-        throw new Error("No square root for 0");
+    let mcm = 0;
+    let mcd = 0;
+    let div_a = 0;
+    let div_b = 0;
+    let resto = 0;
+    let finish = true;
+    
+    div_a = a;
+    div_b = b;
+    if(b > a){
+        div_a = b;
+        div_b = a;
     }
-    if(a < 0){
-        throw new Error("No square root for negative numbers");
+    
+    while(finish){
+            
+        resto = div_a % div_b;
+        div_a = div_b;
+        div_b = resto;
+        if(resto === 0){
+            mcd = div_a;
+            mcm = (a * b) / mcd;
+            finish = false;
+        }
     }
-    return Math.sqrt(a);
+    
+    if(type_return === "mcm"){
+        return mcm;
+    }
+    
+    if(type_return === "mcd"){
+        return mcd;
+    }
+    
 };
 
+const prime = (number) => {
+    
+    let aux = 1;
+    let tag_prime = true;
+    let repetitions = 0;
+    while(aux <= number){
+        if(number % aux === 0){
+            repetitions++;
+            if(repetitions > 2){
+                return false;
+            }
+        }
+        aux++;
+    }   
+    
+    return tag_prime;
+};
 
+const co_prime = (num_a, num_b) => {
+    
+    let aux = 1;
+    let repetitions = 0;
+    let a_prime = [];
+    let b_prime = [];
+    while(aux <= num_a){
+        if(num_a % aux === 0){
+            repetitions++;
+            if(aux !== 1)a_prime.push(aux);
+        }
+        aux++;
+    }
+    
+    aux = 1;
+    while(aux <= num_b){
+        if(num_b % aux === 0){
+            repetitions++;
+            if(aux !== 1){
+                if(a_prime.indexOf(aux) === -1){
+                    //si no existe en el array de primos del 
+                    //numero anterior lo metemos en su array
+                    b_prime.push(aux);
+                }else{
+                    //si existe no son coprimos
+                    return false;
+                }
+            }
+        }
+        aux++;
+    }
+    
+    return true;
+};
+
+const square = (num) => {
+    if(num === 0){
+        throw new Error("No square root for 0");
+    }
+    if(num < 0){
+        throw new Error("No square root for negative numbers");
+    }
+    
+    let i = 1;
+    let square = 1;
+    while(square <= num){
+        square = i * i;
+        i++;
+    }
+    
+    return square;
+};
+
+const logarithm_10 = (number) => {
+    
+    console.log("number = ",number);
+    const base = 10;
+    const max_decimals = 3;
+    
+    let times = 0;
+    let times_dec = 0;
+    let aux = number;
+    let aux_decimal = "";
+    let result;
+    
+    if(number === 0){
+        throw new Error("No logarithm for zero.");
+    }
+    
+    do{
+        aux = aux / base;
+        console.log("aux = ",aux);
+        times++;
+    }while(aux > base);
+    
+    result = times;
+    times = 0;
+    //parte decimal. Limitado a dos
+    
+    do{
+        //sacaremos 3 decimales
+        console.log("Mantisa = ", aux);
+        aux = Math.pow(base, aux);
+        console.log("Mantisa pow = ", aux);
+        
+        do{        
+            console.log("aux decimal ",aux);
+            aux = aux / base;
+            times_dec++;
+
+        }while(aux > base);
+        aux_decimal += times_dec;
+        console.log("aux decimal fuera = ",aux_decimal);
+
+        times++;
+        
+    }while(times < max_decimals);
+    
+    result = result +"."+ aux_decimal;
+    console.log(`log 10 ${number} = `, result);
+    return result;
+};
+
+function getMantisa(number, base){
+    
+    
+}
+
+
+/*
+ * Params:
+ * base: number to get the expo
+ * expo: exponential number
+ */
+const expo_e = (expo) => {
+    
+    const e = 2.718281828459045;
+    let number = e;
+    let i = 1;
+    
+    while(i < expo){
+        number = number * e;
+        i++;
+    }
+    return number;
+}
+
+const number_round = (decimal, n_decimal) => {
+    
+    let aux_number = decimal.toString().split(".")[0];
+    let aux_decimal = decimal.toString().split(".")[1];
+    let number = aux_number+"."+aux_decimal;
+    number = parseFloat(number).toFixed(n_decimal);
+    
+    return number;
+};
 
 module.exports = {
     suma,
@@ -64,6 +236,11 @@ module.exports = {
     multi,
     div,
     div_rest,
+    mcm,
+    prime,
+    co_prime,
     square,
-    expo
+    logarithm_10,
+    expo_e,
+    number_round
 };
