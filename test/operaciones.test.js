@@ -265,11 +265,12 @@ describe("Operaciones", () => {
     describe("Logarithm 10:", () => {
         it("Test Logarithm", () =>{
             a = getIntRandom(1, 2000);
+            //a = 1235;
             let res = op.logarithm_10(a);
-            let real = Math.log10(a);
-            if(real - res > -0.05 || real - res < 0.5 ){
-                assert.ok(true);
-            }
+            let real = Math.log10(a).toFixed(3);
+            
+            assert.equal(res, real);
+            
             
         });
               

@@ -163,7 +163,7 @@ const logarithm_10 = (number) => {
     
     //factorizamos el numero
     do{
-        aux = aux / base;
+        aux = (aux / base).toFixed(3);
         times++;
     }while(aux > base);
     
@@ -175,9 +175,24 @@ const logarithm_10 = (number) => {
     }
     do{
         //sacaremos 3 decimales
-        aux = Math.pow(base, aux);        
-        do{        
-            aux = aux / base;
+        //console.log("aux primero = ",aux);
+        let p = 0;
+        do{
+            aux = Math.pow(aux, base).toFixed(3);
+            //console.log("pow hasta mayor 10 = ", aux);
+            p++;
+        }while(aux < base);
+        
+        if(p > 0){
+            while((p - 1) > 0){
+                aux_decimal +="0";
+                p--;
+            }
+        }
+        
+        times_dec   = 0;
+        do{
+            aux = (aux / base).toFixed(3);
             times_dec++;
 
         }while(aux > base);
@@ -187,8 +202,9 @@ const logarithm_10 = (number) => {
     }while(times < max_decimals);
     
     result = result +"."+ aux_decimal;
-    console.log(`log 10 ${number} = `, result);
+    result= parseFloat(result).toFixed(3);
     
+    console.log(`log 10 ${number} = `, result);    
     return result;
 };
 
